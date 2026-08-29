@@ -1,0 +1,4071 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#171922">
+<title>GAME HUB 3.20</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    font-family: Arial, "Malgun Gothic", sans-serif;
+    background: #101116;
+    color: #f4f4f4;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+    border: 0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* LOGIN */
+
+#loginScreen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background:
+        radial-gradient(circle at top, #30334a 0%, #171922 45%, #0d0e12 100%);
+}
+
+.loginBox {
+    width: 100%;
+    max-width: 430px;
+    padding: 35px 28px;
+    background: rgba(28, 30, 41, .96);
+    border: 1px solid #3a3d50;
+    border-radius: 22px;
+    box-shadow: 0 20px 70px rgba(0,0,0,.45);
+    text-align: center;
+}
+
+.logo {
+    font-size: 38px;
+    font-weight: 900;
+    letter-spacing: -2px;
+}
+
+.logo span,
+.brand span {
+    color: #7c8cff;
+}
+
+.loginSub {
+    margin: 8px 0 25px;
+    color: #999eae;
+    font-size: 13px;
+}
+
+.input {
+    width: 100%;
+    padding: 13px 15px;
+    margin: 6px 0;
+    background: #171922;
+    color: white;
+    border: 1px solid #393c4c;
+    border-radius: 10px;
+    outline: none;
+}
+
+.input:focus {
+    border-color: #7c8cff;
+}
+
+.primary,
+.secondary {
+    width: 100%;
+    padding: 13px;
+    margin-top: 9px;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: .15s;
+}
+
+.primary {
+    background: #6f7cff;
+    color: white;
+}
+
+.secondary {
+    background: #292c39;
+    color: #ddd;
+}
+
+.primary:hover,
+.secondary:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.1);
+}
+
+.loginMsg {
+    min-height: 22px;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+/* HEADER */
+
+#app {
+    min-height: 100vh;
+}
+
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    background: rgba(20, 21, 29, .96);
+    border-bottom: 1px solid #2d303d;
+    backdrop-filter: blur(10px);
+}
+
+.brand {
+    margin-right: auto;
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.brand small {
+    color: #777c8d;
+    font-size: 12px;
+}
+
+.topStat {
+    padding: 8px 12px;
+    background: #242733;
+    border-radius: 9px;
+    font-size: 14px;
+}
+
+.menuBtn {
+    padding: 9px 13px;
+    border-radius: 9px;
+    background: #353846;
+    color: white;
+}
+
+/* NAV */
+
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    padding: 10px 15px;
+    background: #171922;
+    border-bottom: 1px solid #292c38;
+}
+
+.nav button {
+    padding: 10px 13px;
+    border-radius: 9px;
+    background: #242733;
+    color: #bfc3d0;
+}
+
+.nav button:hover,
+.nav button.active {
+    background: #6f7cff;
+    color: white;
+}
+
+/* MAIN */
+
+main {
+    max-width: 1250px;
+    margin: auto;
+    padding: 25px 18px 60px;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+.pageTitle {
+    font-size: 30px;
+    font-weight: 900;
+    margin-bottom: 7px;
+}
+
+.pageSub {
+    color: #999eae;
+    margin-bottom: 22px;
+}
+
+/* HOME */
+
+.homeHero {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 18px;
+}
+
+.hero {
+    padding: 35px;
+    border-radius: 20px;
+    background:
+        linear-gradient(135deg, #252a48, #171922);
+    border: 1px solid #373b55;
+}
+
+.hero h1 {
+    margin-top: 0;
+    font-size: 48px;
+}
+
+.hero p {
+    color: #b7bbc9;
+    line-height: 1.7;
+}
+
+.card {
+    padding: 20px;
+    border-radius: 16px;
+    background: #1b1d27;
+    border: 1px solid #303340;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.gameCard {
+    transition: .15s;
+}
+
+.gameCard:hover {
+    transform: translateY(-3px);
+    border-color: #626bff;
+}
+
+.gameIcon {
+    font-size: 45px;
+}
+
+.gameCard h3 {
+    margin-bottom: 7px;
+}
+
+.gameCard p {
+    color: #999eae;
+    min-height: 42px;
+}
+
+.gameCard button,
+.slimeControls button {
+    width: 100%;
+    padding: 11px;
+    border-radius: 9px;
+    background: #303442;
+    color: white;
+}
+
+.xpbar {
+    height: 12px;
+    margin-top: 13px;
+    overflow: hidden;
+    background: #111218;
+    border-radius: 99px;
+}
+
+.xpfill {
+    width: 0%;
+    height: 100%;
+    background: #62d68d;
+    transition: .25s;
+}
+
+/* WORLD */
+
+.world {
+    position: relative;
+    min-height: 560px;
+    padding: 25px;
+    border-radius: 25px;
+    background:
+        linear-gradient(#1d2a31, #18221f);
+    border: 1px solid #35483f;
+}
+
+.worldTitle {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.plaza {
+    width: 180px;
+    height: 150px;
+    margin: 150px auto 0;
+    padding-top: 45px;
+    text-align: center;
+    border-radius: 50%;
+    background: #343a3c;
+    border: 5px solid #59615d;
+    font-size: 25px;
+}
+
+.worldPlace {
+    position: absolute;
+    width: 180px;
+    padding: 18px;
+    border-radius: 15px;
+    background: #252b2b;
+    color: white;
+    border: 1px solid #46534e;
+    font-size: 18px;
+}
+
+.worldPlace small {
+    display: block;
+    margin-top: 5px;
+    color: #9ca6a1;
+    font-size: 12px;
+}
+
+.placeGames {
+    left: 30px;
+    top: 150px;
+}
+
+.placeShop {
+    right: 30px;
+    top: 150px;
+}
+
+.placeRoulette {
+    left: 30px;
+    bottom: 50px;
+}
+
+.placeSlime {
+    right: 30px;
+    bottom: 50px;
+}
+
+/* SLIME */
+
+.slimeRoom {
+    position: relative;
+    height: 400px;
+    margin: 15px 0;
+    overflow: hidden;
+    border-radius: 20px;
+    background:
+        linear-gradient(#263548 0 72%, #765c4b 72%);
+    border: 5px solid #453c3b;
+}
+
+.roomDecor {
+    position: absolute;
+    font-size: 55px;
+}
+
+.decor1 {
+    left: 8%;
+    bottom: 15%;
+}
+
+.decor2 {
+    right: 10%;
+    bottom: 16%;
+}
+
+.decor3 {
+    left: 43%;
+    bottom: 3%;
+}
+
+.slime {
+    position: absolute;
+    left: 50%;
+    top: 53%;
+    width: 110px;
+    height: 85px;
+    transform: translate(-50%, -50%);
+    border-radius: 55% 55% 45% 45%;
+    background: #56d879;
+    box-shadow: inset 0 -8px rgba(0,0,0,.12);
+    transition: .2s;
+}
+
+.eye {
+    position: absolute;
+    top: 30px;
+    width: 10px;
+    height: 14px;
+    border-radius: 50%;
+    background: #101116;
+}
+
+.eye.left {
+    left: 32px;
+}
+
+.eye.right {
+    right: 32px;
+}
+
+.mouth {
+    position: absolute;
+    left: 46px;
+    top: 48px;
+    width: 18px;
+    height: 9px;
+    border-bottom: 3px solid #101116;
+    border-radius: 50%;
+}
+
+.emotion {
+    position: absolute;
+    top: -42px;
+    left: 38px;
+    font-size: 30px;
+}
+
+.slimeControls {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+/* SHOP */
+
+.shopItem {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.price {
+    color: #ffd34d;
+    font-weight: bold;
+}
+
+.shopItem button {
+    padding: 10px;
+    border-radius: 9px;
+    background: #303442;
+    color: white;
+}
+
+/* CHAT */
+
+.chatBox {
+    max-width: 800px;
+    margin: auto;
+    background: #191b24;
+    border: 1px solid #303340;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.chatMessages {
+    height: 400px;
+    overflow-y: auto;
+    padding: 15px;
+}
+
+.chatMessage {
+    padding: 8px 0;
+    border-bottom: 1px solid #292c36;
+}
+
+.chatMessage b {
+    color: #7c8cff;
+}
+
+.chatInput {
+    display: flex;
+    gap: 7px;
+    padding: 10px;
+    border-top: 1px solid #303340;
+}
+
+.chatInput input {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+}
+
+.chatInput button {
+    width: 75px;
+    border-radius: 9px;
+    background: #6f7cff;
+    color: white;
+}
+
+/* SETTINGS */
+
+.settingRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid #303340;
+}
+
+.switch {
+    width: 52px;
+    height: 28px;
+    border-radius: 30px;
+    background: #3b3e49;
+    position: relative;
+}
+
+.switch::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+    transition: .2s;
+}
+
+.switch.on {
+    background: #6170ff;
+}
+
+.switch.on::after {
+    left: 28px;
+}
+
+/* GAME WINDOW */
+
+.gameWindow {
+    position: fixed;
+    z-index: 100;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(700px, calc(100% - 30px));
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 20px;
+    border-radius: 18px;
+    background: #1b1d27;
+    border: 1px solid #44485a;
+    box-shadow: 0 30px 100px rgba(0,0,0,.7);
+}
+
+.gameHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.close {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #343743;
+    color: white;
+}
+
+.gameBoard {
+    min-height: 220px;
+    margin: 15px 0;
+    padding: 15px;
+    border-radius: 13px;
+    background: #111319;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.gameResult {
+    min-height: 30px;
+    text-align: center;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.gameControls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.gameControls button {
+    padding: 11px;
+    border-radius: 9px;
+    background: #303442;
+    color: white;
+}
+
+/* REACTION */
+
+.reactionButton {
+    width: 220px;
+    height: 130px;
+    border-radius: 15px;
+    background: #b63838;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.reactionButton.ready {
+    background: #39c96d;
+}
+
+/* MEMORY */
+
+.memoryNumber {
+    font-size: 55px;
+    font-weight: bold;
+}
+
+/* PUZZLE */
+
+.puzzleGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 70px);
+    gap: 8px;
+}
+
+.puzzleGrid button {
+    height: 70px;
+    border-radius: 10px;
+    background: #303442;
+    color: white;
+    font-size: 20px;
+}
+
+/* COLOR */
+
+.colorTarget {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.colorChoices {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.colorChoices button {
+    width: 90px;
+    height: 55px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+}
+
+/* SNAKE */
+
+.snakeCanvas {
+    background: #080a0d;
+    border: 2px solid #4b5260;
+    max-width: 100%;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+    .topbar {
+        flex-wrap: wrap;
+        padding: 10px;
+    }
+
+    .brand {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 4px;
+    }
+
+    .topStat {
+        flex: 1;
+        min-width: 75px;
+        text-align: center;
+        padding: 8px 5px;
+        font-size: 12px;
+    }
+
+    .menuBtn {
+        width: 100%;
+    }
+
+    .nav {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        padding: 8px;
+    }
+
+    .nav button {
+        width: 100%;
+        min-height: 44px;
+        padding: 8px 5px;
+        font-size: 13px;
+    }
+
+    main {
+        padding: 18px 10px 40px;
+    }
+
+    .pageTitle {
+        font-size: 25px;
+    }
+
+    .homeHero {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        padding: 25px 18px;
+    }
+
+    .hero h1 {
+        font-size: 37px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr !important;
+    }
+
+    .world {
+        min-height: 620px;
+        padding: 15px;
+    }
+
+    .plaza {
+        margin-top: 130px;
+    }
+
+    .worldPlace {
+        position: static;
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .slimeControls {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .slimeRoom {
+        height: 330px;
+    }
+
+    .gameWindow {
+        width: calc(100% - 16px);
+        max-height: 94vh;
+        padding: 14px;
+    }
+
+    .puzzleGrid {
+        grid-template-columns: repeat(3, 60px);
+    }
+
+    .puzzleGrid button {
+        width: 60px;
+        height: 60px;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- =========================
+     LOGIN
+========================= -->
+
+<div id="loginScreen">
+
+```
+<div class="loginBox">
+
+    <div class="logo">
+        GAME <span>HUB</span>
+    </div>
+
+    <div class="loginSub">
+        3.20 • MINI GAME WORLD
+    </div>
+
+    <input
+        id="loginId"
+        class="input"
+        placeholder="아이디"
+        maxlength="20"
+    >
+
+    <input
+        id="loginPw"
+        class="input"
+        type="password"
+        placeholder="비밀번호"
+    >
+
+    <button class="primary" onclick="login()">
+        로그인
+    </button>
+
+    <button class="secondary" onclick="register()">
+        새 계정 만들기
+    </button>
+
+    <div id="loginMsg" class="loginMsg"></div>
+
+</div>
+```
+
+</div>
+
+<!-- =========================
+     APP
+========================= -->
+
+<div id="app" class="hidden">
+
+```
+<header class="topbar">
+
+    <div class="brand">
+        GAME <span>HUB</span>
+        <small>3.20</small>
+    </div>
+
+    <div class="topStat">
+        🪙 <span id="goldDisplay">0</span>
+    </div>
+
+    <div class="topStat">
+        🟢 Lv.<span id="slimeLevelDisplay">1</span>
+    </div>
+
+    <div class="topStat">
+        🎟️ <span id="ticketTop">0</span>
+    </div>
+
+    <button class="menuBtn" onclick="logout()">
+        로그아웃
+    </button>
+
+</header>
+
+
+<nav class="nav">
+
+    <button class="active"
+            onclick="showSection('home',this)">
+        🏠 홈
+    </button>
+
+    <button onclick="showSection('world',this)">
+        🌎 월드맵
+    </button>
+
+    <button onclick="showSection('games',this)">
+        🎮 미니게임
+    </button>
+
+    <button onclick="showSection('missions',this)">
+        🎯 미션
+    </button>
+
+    <button onclick="showSection('daily',this)">
+        🎁 일일보상
+    </button>
+
+    <button onclick="showSection('slime',this)">
+        🟢 슬라임 방
+    </button>
+
+    <button onclick="showSection('shop',this)">
+        🛒 상점
+    </button>
+
+    <button onclick="showSection('roulette',this)">
+        🎰 룰렛
+    </button>
+
+    <button onclick="showSection('achievements',this)">
+        🏆 업적
+    </button>
+
+    <button onclick="showSection('chat',this)">
+        💬 채팅
+    </button>
+
+    <button onclick="showSection('settings',this)">
+        ⚙️ 설정
+    </button>
+
+    <button id="adminNav"
+            class="hidden"
+            onclick="showSection('admin',this)">
+        👑 관리자
+    </button>
+
+</nav>
+
+
+<main>
+
+    <!-- HOME -->
+
+    <section id="home" class="section active">
+
+        <div class="homeHero">
+
+            <div class="hero">
+
+                <h1>GAME HUB</h1>
+
+                <p>
+                    미니게임을 플레이하고 골드를 얻으세요.<br>
+                    슬라임과 놀고, 아이템을 모으고,
+                    업적과 미션을 달성하세요!
+                </p>
+
+                <button
+                    class="primary"
+                    style="width:auto;padding:12px 20px"
+                    onclick="showSection('games')">
+                    🎮 게임 시작
+                </button>
+
+            </div>
+
+            <div class="card">
+
+                <h3>🟢 내 슬라임</h3>
+
+                <div style="font-size:18px;margin-top:15px">
+                    레벨
+                    <b id="homeSlimeLevel">1</b>
+                </div>
+
+                <div class="xpbar">
+                    <div id="homeXp" class="xpfill"></div>
+                </div>
+
+                <p id="homeSlimeMood">
+                    기분이 좋아요!
+                </p>
+
+            </div>
+
+        </div>
+
+        <h2>빠른 이동</h2>
+
+        <div class="cards">
+
+            <div class="card gameCard">
+                <div class="gameIcon">🎮</div>
+                <h3>미니게임</h3>
+                <button onclick="showSection('games')">
+                    플레이
+                </button>
+            </div>
+
+            <div class="card gameCard">
+                <div class="gameIcon">🎯</div>
+                <h3>미션</h3>
+                <button onclick="showSection('missions')">
+                    확인
+                </button>
+            </div>
+
+            <div class="card gameCard">
+                <div class="gameIcon">🎁</div>
+                <h3>일일보상</h3>
+                <button onclick="showSection('daily')">
+                    받기
+                </button>
+            </div>
+
+            <div class="card gameCard">
+                <div class="gameIcon">🟢</div>
+                <h3>슬라임 방</h3>
+                <button onclick="showSection('slime')">
+                    놀아주기
+                </button>
+            </div>
+
+            <div class="card gameCard">
+                <div class="gameIcon">🛒</div>
+                <h3>상점</h3>
+                <button onclick="showSection('shop')">
+                    상점 열기
+                </button>
+            </div>
+
+            <div class="card gameCard">
+                <div class="gameIcon">🏆</div>
+                <h3>업적</h3>
+                <button onclick="showSection('achievements')">
+                    확인
+                </button>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- WORLD -->
+
+    <section id="world" class="section">
+
+        <div class="pageTitle">
+            🌎 GAME HUB 광장
+        </div>
+
+        <div class="pageSub">
+            광장을 돌아다니며 원하는 장소를 선택하세요.
+        </div>
+
+        <div class="world">
+
+            <div class="worldTitle">
+                🏙️ GAME HUB PLAZA
+            </div>
+
+            <div class="plaza">
+                🏛️<br>광장
+            </div>
+
+            <button class="worldPlace placeGames"
+                    onclick="showSection('games')">
+                🎮 게임장
+                <small>미니게임 플레이</small>
+            </button>
+
+            <button class="worldPlace placeShop"
+                    onclick="showSection('shop')">
+                🛒 상점
+                <small>아이템 구매</small>
+            </button>
+
+            <button class="worldPlace placeRoulette"
+                    onclick="showSection('roulette')">
+                🎰 룰렛관
+                <small>뽑기권 사용</small>
+            </button>
+
+            <button class="worldPlace placeSlime"
+                    onclick="showSection('slime')">
+                🟢 슬라임 방
+                <small>슬라임 돌보기</small>
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- GAMES -->
+
+    <section id="games" class="section">
+
+        <div class="pageTitle">
+            🎮 미니게임
+        </div>
+
+        <div class="pageSub">
+            게임마다 조건을 달성해야 보상을 받을 수 있습니다.
+        </div>
+
+        <div class="cards">
+
+            <div class="card gameCard">
+                <div class="gameIcon">⚡</div>
+                <h3>반응속도</h3>
+                <p>빨간색이 초록색으로 바뀌면 빠르게 클릭!</p>
+                <button onclick="startGame('reaction')">
+                    플레이
+                </button>
+            </div>
+
+            <div class="card gameCard">
+                <div class="gameIcon">🔢</div>
+                <h3>숫자 기억</h3>
+                <p>잠깐 보여주는 숫자를 정확하게 입력하세요.</p>
+                <button onclick="startGame('memory')">
+                    플레이
+                </button>
+            </div>
+
+            <div class="card gameCard">
+                <div class="gameIcon">👆</div>
+                <h3>클릭 챌린지</h3>
+                <p>10초 동안 최대한 많이 클릭하세요.</p>
+                <button onclick="startGame('click')">
+                    플레이
+                </button>
+            </div>
+
+            <div class="card gameCard">
+                <div class="gameIcon">🐍</div>
+                <h3>스네이크</h3>
+                <p>사과를 먹고 벽이나 자신의 몸을 피하세요.</p>
+                <button onclick="startGame('snake')">
+                    플레이
+                </button>
+            </div>
+
+            <div class="card gameCard">
+                <div class="gameIcon">💣</div>
+                <h3>폭탄 피하기</h3>
+                <p>움직이는 폭탄을 피해 오래 버티세요.</p>
+                <button onclick="startGame('bomb')">
+                    플레이
+                </button>
+            </div>
+
+            <div class="card gameCard">
+                <div class="gameIcon">🧩</div>
+                <h3>숫자 퍼즐</h3>
+                <p>1부터 9까지 순서대로 클릭하세요.</p>
+                <button onclick="startGame('puzzle')">
+                    플레이
+                </button>
+            </div>
+
+            <div class="card gameCard">
+                <div class="gameIcon">🃏</div>
+                <h3>카드 기억</h3>
+                <p>같은 카드 두 장을 찾아보세요.</p>
+                <button onclick="startGame('cards')">
+                    플레이
+                </button>
+            </div>
+
+            <div class="card gameCard">
+                <div class="gameIcon">🎨</div>
+                <h3>색깔 순발력</h3>
+                <p>목표 색깔과 같은 버튼을 선택하세요.</p>
+                <button onclick="startGame('color')">
+                    플레이
+                </button>
+            </div>
+
+            <div class="card gameCard">
+                <div class="gameIcon">🌀</div>
+                <h3>길 찾기</h3>
+                <p>미로에서 출구를 찾아보세요.</p>
+                <button onclick="startGame('maze')">
+                    플레이
+                </button>
+            </div>
+
+            <div class="card gameCard">
+                <div class="gameIcon">🎯</div>
+                <h3>타이밍 존</h3>
+                <p>정확한 타이밍에 버튼을 클릭하세요.</p>
+                <button onclick="startGame('timing')">
+                    플레이
+                </button>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- MISSIONS -->
+
+    <section id="missions" class="section">
+
+        <div class="pageTitle">🎯 미션</div>
+
+        <div class="pageSub">
+            미션을 완료하면 추가 보상을 받을 수 있습니다.
+        </div>
+
+        <div id="missionGrid" class="cards"></div>
+
+    </section>
+
+
+    <!-- DAILY -->
+
+    <section id="daily" class="section">
+
+        <div class="pageTitle">🎁 일일 보상</div>
+
+        <div class="pageSub">
+            하루에 한 번 보상을 받을 수 있습니다.
+        </div>
+
+        <div class="card"
+             style="max-width:650px;margin:auto;text-align:center">
+
+            <div style="font-size:80px">🎁</div>
+
+            <h2>오늘의 출석 보상</h2>
+
+            <p>매일 접속해서 보상을 받으세요!</p>
+
+            <div id="dailyInfo"
+                 style="font-size:18px;margin:20px 0">
+            </div>
+
+            <button id="dailyButton"
+                    class="primary"
+                    onclick="claimDaily()">
+                🎁 보상 받기
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- SLIME -->
+
+    <section id="slime" class="section">
+
+        <div class="pageTitle">🟢 슬라임 방</div>
+
+        <div class="pageSub">
+            슬라임에게 먹이를 주고 장난감으로 놀아주세요.
+        </div>
+
+        <div class="card">
+
+            <b>
+                슬라임 Lv.<span id="slimeLevel">1</span>
+            </b>
+
+            <span style="float:right">
+                XP
+                <span id="slimeXpText">0 / 100</span>
+            </span>
+
+            <div class="xpbar">
+                <div id="slimeXp" class="xpfill"></div>
+            </div>
+
+        </div>
+
+        <div class="slimeRoom">
+
+            <div class="roomDecor decor1">🪴</div>
+            <div class="roomDecor decor2">🧸</div>
+            <div class="roomDecor decor3">🛋️</div>
+
+            <div id="slimeCharacter" class="slime">
+
+                <div class="eye left"></div>
+                <div class="eye right"></div>
+                <div class="mouth"></div>
+
+                <div id="slimeEmotion"
+                     class="emotion">
+                    😊
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="slimeControls">
+
+            <button onclick="feedSlime()">
+                🍎 먹이 주기
+            </button>
+
+            <button onclick="playSlime()">
+                🧸 장난감으로 놀기
+            </button>
+
+            <button onclick="petSlime()">
+                💖 쓰다듬기
+            </button>
+
+            <button onclick="slimeEmotion()">
+                😆 감정표현
+            </button>
+
+        </div>
+
+        <div class="cards" style="margin-top:15px">
+
+            <div class="card">
+                <h3>🍎 먹이</h3>
+                <b id="foodCount">0</b>개
+            </div>
+
+            <div class="card">
+                <h3>🧸 장난감</h3>
+                <b id="toyCount">0</b>개
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SHOP -->
+
+    <section id="shop" class="section">
+
+        <div class="pageTitle">🛒 상점</div>
+
+        <div class="pageSub">
+            골드를 사용해서 아이템을 구매하세요.
+        </div>
+
+        <div id="shopGrid" class="cards"></div>
+
+    </section>
+
+
+    <!-- ROULETTE -->
+
+    <section id="roulette" class="section">
+
+        <div class="pageTitle">🎰 행운 룰렛</div>
+
+        <div class="pageSub">
+            상점에서 뽑기권을 구매하여 룰렛을 돌릴 수 있습니다.
+        </div>
+
+        <div class="card"
+             style="max-width:600px;margin:auto;text-align:center">
+
+            <div id="rouletteIcon"
+                 style="font-size:90px">
+                🎰
+            </div>
+
+            <h2>행운 룰렛</h2>
+
+            <p>
+                보유 뽑기권:
+                <b id="ticketCount">0</b>
+            </p>
+
+            <button class="primary"
+                    onclick="spinRoulette()">
+                🎟️ 룰렛 돌리기
+            </button>
+
+            <h3>확률표</h3>
+
+            <div style="text-align:left;line-height:2">
+
+                🪙 30골드 — <b>40%</b><br>
+                🍎 먹이 3개 — <b>25%</b><br>
+                🧸 장난감 — <b>18%</b><br>
+                🎨 랜덤 스킨 — <b>10%</b><br>
+                💎 100골드 — <b>5%</b><br>
+                👑 희귀 보상 — <b>2%</b>
+
+            </div>
+
+            <div id="rouletteResult"
+                 class="gameResult">
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ACHIEVEMENTS -->
+
+    <section id="achievements" class="section">
+
+        <div class="pageTitle">🏆 업적</div>
+
+        <div class="pageSub">
+            다양한 조건을 달성해 보상을 받으세요.
+        </div>
+
+        <div id="achievementGrid"
+             class="cards">
+        </div>
+
+    </section>
+
+
+    <!-- CHAT -->
+
+    <section id="chat" class="section">
+
+        <div class="pageTitle">💬 채팅</div>
+
+        <div class="pageSub">
+            현재 브라우저에서 저장되는 간단한 채팅입니다.
+        </div>
+
+        <div class="chatBox">
+
+            <div id="chatMessages"
+                 class="chatMessages">
+            </div>
+
+            <div class="chatInput">
+
+                <input
+                    id="chatText"
+                    maxlength="100"
+                    placeholder="메시지를 입력하세요..."
+                >
+
+                <button onclick="sendChat()">
+                    전송
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SETTINGS -->
+
+    <section id="settings" class="section">
+
+        <div class="pageTitle">⚙️ 설정</div>
+
+        <div class="card">
+
+            <div class="settingRow">
+                <span>📱 모바일 모드</span>
+
+                <button id="mobileSwitch"
+                        class="switch"
+                        onclick="toggleMobileMode()">
+                </button>
+            </div>
+
+            <div class="settingRow">
+                <span>🔊 효과음</span>
+
+                <button id="soundSwitch"
+                        class="switch on"
+                        onclick="toggleSound()">
+                </button>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ADMIN -->
+
+    <section id="admin" class="section">
+
+        <div class="pageTitle">
+            👑 관리자 센터
+        </div>
+
+        <div class="pageSub">
+            관리자 전용 기능입니다.
+        </div>
+
+        <div class="card">
+
+            <h2>👑 레인이에요 관리자</h2>
+
+            <p>
+                현재 관리자 권한으로 로그인되어 있습니다.
+            </p>
+
+            <h3>📢 전체 공지</h3>
+
+            <input id="announcement"
+                   class="input"
+                   placeholder="공지 내용을 입력하세요">
+
+            <button class="primary"
+                    onclick="adminAnnouncement()">
+                전송
+            </button>
+
+            <h3>🚫 플레이어 관리</h3>
+
+            <input id="banName"
+                   class="input"
+                   placeholder="플레이어 ID">
+
+            <button class="secondary"
+                    onclick="banPlayer()">
+                밴
+            </button>
+
+            <button class="secondary"
+                    onclick="unbanPlayer()">
+                해제
+            </button>
+
+            <h3>📊 현재 계정</h3>
+
+            <p>
+                ID:
+                <b id="adminCurrentId"></b>
+            </p>
+
+            <p>
+                권한:
+                <b style="color:#ffd34d">
+                    ADMIN
+                </b>
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+```
+
+</div>
+
+<!-- GAME WINDOW -->
+
+<div id="gameModal"
+     class="gameWindow hidden">
+
+```
+<div class="gameHeader">
+
+    <h2 id="gameTitle">게임</h2>
+
+    <button class="close"
+            onclick="closeGame()">
+        ✕
+    </button>
+
+</div>
+
+<div id="gameInfo"></div>
+
+<div id="gameBoard"
+     class="gameBoard">
+</div>
+
+<div id="gameResult"
+     class="gameResult">
+</div>
+
+<div class="gameControls">
+
+    <button onclick="restartCurrentGame()">
+        🔄 다시하기
+    </button>
+
+    <button onclick="closeGame()">
+        나가기
+    </button>
+
+</div>
+```
+
+</div>
+
+<script>
+/* =========================================================
+   GAME HUB 3.20
+   LOGIN
+========================================================= */
+
+const ADMIN_ID = "레인이에요";
+const ADMIN_PW = "jja0915*";
+
+let currentUser = null;
+let gameTimer = null;
+let gameInterval = null;
+let currentGame = null;
+
+function getAccounts() {
+    try {
+        return JSON.parse(
+            localStorage.getItem("gameHubAccounts")
+        ) || {};
+    } catch {
+        return {};
+    }
+}
+
+function saveAccounts(accounts) {
+    localStorage.setItem(
+        "gameHubAccounts",
+        JSON.stringify(accounts)
+    );
+}
+
+function defaultAccount() {
+    return {
+        password: "",
+        gold: 100,
+        slimeLevel: 1,
+        slimeXp: 0,
+        tickets: 0,
+        food: 3,
+        toys: 1,
+        gamesPlayed: 0,
+        gamesWon: 0,
+        clicks: 0,
+        slimeActions: 0,
+        missions: {},
+        achievements: {},
+        ownedSkins: [],
+        dailyClaimed: "",
+        banned: false,
+        createdAt: Date.now()
+    };
+}
+
+function login() {
+
+    const id = document.getElementById("loginId").value.trim();
+    const pw = document.getElementById("loginPw").value;
+    const msg = document.getElementById("loginMsg");
+
+    if (!id || !pw) {
+        msg.textContent =
+            "아이디와 비밀번호를 입력해주세요.";
+        msg.style.color = "#ff6b6b";
+        return;
+    }
+
+    if (id === ADMIN_ID && pw === ADMIN_PW) {
+
+        currentUser = {
+            id: ADMIN_ID,
+            admin: true,
+            data: {
+                ...defaultAccount(),
+                password: ""
+            }
+        };
+
+        localStorage.setItem(
+            "gameHubCurrentUser",
+            JSON.stringify({
+                id: ADMIN_ID,
+                admin: true
+            })
+        );
+
+        msg.textContent = "관리자 로그인 성공!";
+        msg.style.color = "#ffd34d";
+
+        enterGame();
+        return;
+    }
+
+    const accounts = getAccounts();
+
+    if (!accounts[id]) {
+        msg.textContent =
+            "존재하지 않는 계정입니다.";
+        msg.style.color = "#ff6b6b";
+        return;
+    }
+
+    if (accounts[id].banned) {
+        msg.textContent =
+            "이 계정은 이용이 제한되었습니다.";
+        msg.style.color = "#ff6b6b";
+        return;
+    }
+
+    if (accounts[id].password !== pw) {
+        msg.textContent =
+            "비밀번호가 틀렸습니다.";
+        msg.style.color = "#ff6b6b";
+        return;
+    }
+
+    currentUser = {
+        id: id,
+        admin: false,
+        data: accounts[id]
+    };
+
+    localStorage.setItem(
+        "gameHubCurrentUser",
+        JSON.stringify({
+            id: id,
+            admin: false
+        })
+    );
+
+    enterGame();
+}
+
+function register() {
+
+    const idInput = document.getElementById("loginId");
+    const pwInput = document.getElementById("loginPw");
+    const msg = document.getElementById("loginMsg");
+
+    const id = idInput.value.trim();
+    const pw = pwInput.value;
+
+    if (id.length < 2) {
+        msg.textContent =
+            "아이디는 2자 이상이어야 합니다.";
+        msg.style.color = "#ff6b6b";
+        return;
+    }
+
+    if (pw.length < 4) {
+        msg.textContent =
+            "비밀번호는 4자 이상이어야 합니다.";
+        msg.style.color = "#ff6b6b";
+        return;
+    }
+
+    if (id === ADMIN_ID) {
+        msg.textContent =
+            "사용할 수 없는 아이디입니다.";
+        msg.style.color = "#ff6b6b";
+        return;
+    }
+
+    const accounts = getAccounts();
+
+    if (accounts[id]) {
+        msg.textContent =
+            "이미 존재하는 아이디입니다.";
+        msg.style.color = "#ff6b6b";
+        return;
+    }
+
+    const account = defaultAccount();
+    account.password = pw;
+
+    accounts[id] = account;
+
+    saveAccounts(accounts);
+
+    msg.textContent =
+        "계정 생성 완료! 로그인해주세요.";
+    msg.style.color = "#6cff8d";
+
+    pwInput.value = "";
+}
+
+function enterGame() {
+
+    document.getElementById("loginScreen")
+        .classList.add("hidden");
+
+    document.getElementById("app")
+        .classList.remove("hidden");
+
+    updateUI();
+}
+
+function logout() {
+
+    currentUser = null;
+
+    localStorage.removeItem(
+        "gameHubCurrentUser"
+    );
+
+    document.getElementById("app")
+        .classList.add("hidden");
+
+    document.getElementById("loginScreen")
+        .classList.remove("hidden");
+
+    document.getElementById("loginId").value = "";
+    document.getElementById("loginPw").value = "";
+    document.getElementById("loginMsg").textContent = "";
+
+    closeGame();
+}
+
+function checkLogin() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+                "gameHubCurrentUser"
+            );
+
+        if (!saved) return;
+
+        const session = JSON.parse(saved);
+
+        if (session.admin) {
+
+            currentUser = {
+                id: ADMIN_ID,
+                admin: true,
+                data: {
+                    ...defaultAccount()
+                }
+            };
+
+            enterGame();
+            return;
+        }
+
+        const accounts = getAccounts();
+
+        if (!accounts[session.id]) return;
+
+        if (accounts[session.id].banned) {
+            localStorage.removeItem(
+                "gameHubCurrentUser"
+            );
+            return;
+        }
+
+        currentUser = {
+            id: session.id,
+            admin: false,
+            data: accounts[session.id]
+        };
+
+        enterGame();
+
+    } catch {
+        localStorage.removeItem(
+            "gameHubCurrentUser"
+        );
+    }
+}
+
+
+/* =========================================================
+   DATA
+========================================================= */
+
+function saveCurrentUser() {
+
+    if (!currentUser || currentUser.admin) return;
+
+    const accounts = getAccounts();
+
+    accounts[currentUser.id] = currentUser.data;
+
+    saveAccounts(accounts);
+}
+
+function reward(gold, xp) {
+
+    if (!currentUser) return;
+
+    if (gold) {
+        currentUser.data.gold += gold;
+    }
+
+    if (xp) {
+        addXP(xp);
+    }
+
+    currentUser.data.gamesWon++;
+
+    saveCurrentUser();
+    updateUI();
+}
+
+function addXP(amount) {
+
+    const data = currentUser.data;
+
+    data.slimeXp += amount;
+
+    while (data.slimeXp >= 100) {
+
+        data.slimeXp -= 100;
+        data.slimeLevel++;
+
+        data.gold += 25;
+    }
+}
+
+function updateUI() {
+
+    if (!currentUser) return;
+
+    const d = currentUser.data;
+
+    document.getElementById("goldDisplay")
+        .textContent = d.gold;
+
+    document.getElementById("slimeLevelDisplay")
+        .textContent = d.slimeLevel;
+
+    document.getElementById("ticketTop")
+        .textContent = d.tickets;
+
+    document.getElementById("slimeLevel")
+        .textContent = d.slimeLevel;
+
+    document.getElementById("slimeXpText")
+        .textContent =
+        d.slimeXp + " / 100";
+
+    document.getElementById("foodCount")
+        .textContent = d.food;
+
+    document.getElementById("toyCount")
+        .textContent = d.toys;
+
+    document.getElementById("homeSlimeLevel")
+        .textContent = d.slimeLevel;
+
+    document.getElementById("homeXp")
+        .style.width =
+        d.slimeXp + "%";
+
+    document.getElementById("slimeXp")
+        .style.width =
+        d.slimeXp + "%";
+
+    document.getElementById("ticketCount")
+        .textContent = d.tickets;
+
+    document.getElementById("adminNav")
+        .classList.toggle(
+            "hidden",
+            !currentUser.admin
+        );
+
+    document.getElementById("adminCurrentId")
+        .textContent =
+        currentUser.admin ? currentUser.id : "";
+
+    renderMissions();
+    renderShop();
+    renderAchievements();
+    updateDaily();
+    renderChat();
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function showSection(id, button) {
+
+    document.querySelectorAll(".section")
+        .forEach(s => s.classList.remove("active"));
+
+    const target =
+        document.getElementById(id);
+
+    if (target) {
+        target.classList.add("active");
+    }
+
+    document.querySelectorAll(".nav button")
+        .forEach(b => b.classList.remove("active"));
+
+    if (button) {
+        button.classList.add("active");
+    }
+}
+
+
+/* =========================================================
+   GAME SYSTEM
+========================================================= */
+
+function startGame(type) {
+
+    clearGameTimers();
+
+    currentGame = type;
+
+    document.getElementById("gameModal")
+        .classList.remove("hidden");
+
+    const titles = {
+        reaction: "⚡ 반응속도",
+        memory: "🔢 숫자 기억",
+        click: "👆 클릭 챌린지",
+        snake: "🐍 스네이크",
+        bomb: "💣 폭탄 피하기",
+        puzzle: "🧩 숫자 퍼즐",
+        cards: "🃏 카드 기억",
+        color: "🎨 색깔 순발력",
+        maze: "🌀 길 찾기",
+        timing: "🎯 타이밍 존"
+    };
+
+    document.getElementById("gameTitle")
+        .textContent = titles[type];
+
+    document.getElementById("gameResult")
+        .textContent = "";
+
+    currentUser.data.gamesPlayed++;
+
+    saveCurrentUser();
+
+    const games = {
+        reaction: gameReaction,
+        memory: gameMemory,
+        click: gameClick,
+        snake: gameSnake,
+        bomb: gameBomb,
+        puzzle: gamePuzzle,
+        cards: gameCards,
+        color: gameColor,
+        maze: gameMaze,
+        timing: gameTiming
+    };
+
+    games[type]();
+}
+
+function clearGameTimers() {
+
+    if (gameTimer) {
+        clearTimeout(gameTimer);
+        gameTimer = null;
+    }
+
+    if (gameInterval) {
+        clearInterval(gameInterval);
+        gameInterval = null;
+    }
+}
+
+function closeGame() {
+
+    clearGameTimers();
+
+    document.getElementById("gameModal")
+        .classList.add("hidden");
+
+    currentGame = null;
+}
+
+function restartCurrentGame() {
+
+    if (currentGame) {
+        startGame(currentGame);
+    }
+}
+
+function winGame(gold, xp, text) {
+
+    document.getElementById("gameResult")
+        .textContent =
+        text +
+        " +" + gold +
+        "골드 / +" + xp + "XP";
+
+    reward(gold, xp);
+}
+
+
+/* =========================================================
+   REACTION
+========================================================= */
+
+function gameReaction() {
+
+    const board =
+        document.getElementById("gameBoard");
+
+    board.innerHTML = `
+        <p>초록색이 될 때까지 기다리세요.</p>
+        <button id="reactionBtn"
+                class="reactionButton">
+            기다리세요...
+        </button>
+    `;
+
+    const btn =
+        document.getElementById("reactionBtn");
+
+    let ready = false;
+    let startTime = 0;
+
+    const delay =
+        1500 + Math.random() * 3000;
+
+    gameTimer = setTimeout(() => {
+
+        ready = true;
+        startTime = performance.now();
+
+        btn.classList.add("ready");
+        btn.textContent = "지금!";
+
+    }, delay);
+
+    btn.onclick = () => {
+
+        if (!ready) {
+
+            clearGameTimers();
+
+            document.getElementById("gameResult")
+                .textContent =
+                "너무 빨랐습니다! 다시 도전하세요.";
+
+            return;
+        }
+
+        const ms =
+            Math.round(performance.now() - startTime);
+
+        clearGameTimers();
+
+        let gold = 20;
+        let xp = 10;
+
+        if (ms < 250) {
+            gold = 50;
+            xp = 25;
+        } else if (ms < 400) {
+            gold = 35;
+            xp = 18;
+        }
+
+        winGame(
+            gold,
+            xp,
+            "성공! 반응속도 " + ms + "ms"
+        );
+    };
+}
+
+
+/* =========================================================
+   MEMORY
+========================================================= */
+
+function gameMemory() {
+
+    const board =
+        document.getElementById("gameBoard");
+
+    const number =
+        Math.floor(10000 + Math.random() * 90000);
+
+    board.innerHTML = `
+        <div class="memoryNumber">${number}</div>
+        <p>숫자를 기억하세요!</p>
+    `;
+
+    gameTimer = setTimeout(() => {
+
+        board.innerHTML = `
+            <p>숫자를 입력하세요.</p>
+            <input id="memoryInput"
+                   class="input"
+                   style="max-width:300px"
+                   inputmode="numeric">
+            <button id="memorySubmit"
+                    class="primary"
+                    style="max-width:300px">
+                확인
+            </button>
+        `;
+
+        document.getElementById("memorySubmit")
+            .onclick = () => {
+
+                const answer =
+                    document.getElementById("memoryInput")
+                    .value.trim();
+
+                if (answer === String(number)) {
+
+                    winGame(
+                        40,
+                        20,
+                        "정답!"
+                    );
+
+                } else {
+
+                    document.getElementById("gameResult")
+                        .textContent =
+                        "틀렸습니다. 정답은 " + number;
+                }
+            };
+
+    }, 1800);
+}
+
+
+/* =========================================================
+   CLICK
+========================================================= */
+
+function gameClick() {
+
+    const board =
+        document.getElementById("gameBoard");
+
+    let clicks = 0;
+    let time = 10;
+
+    board.innerHTML = `
+        <h2 id="clickTime">10초</h2>
+        <button id="clickButton"
+                class="primary"
+                style="width:220px;height:120px;font-size:28px">
+            클릭!
+        </button>
+        <h2 id="clickCount">0</h2>
+    `;
+
+    const btn =
+        document.getElementById("clickButton");
+
+    btn.onclick = () => {
+
+        clicks++;
+
+        document.getElementById("clickCount")
+            .textContent = clicks;
+
+        currentUser.data.clicks++;
+    };
+
+    gameInterval = setInterval(() => {
+
+        time--;
+
+        document.getElementById("clickTime")
+            .textContent =
+            time + "초";
+
+        if (time <= 0) {
+
+            clearGameTimers();
+
+            let gold = 10 + clicks * 2;
+            let xp = Math.min(30, 5 + clicks);
+
+            winGame(
+                gold,
+                xp,
+                clicks + "회 클릭 성공!"
+            );
+
+        }
+
+    }, 1000);
+}
+
+
+/* =========================================================
+   SNAKE
+========================================================= */
+
+function gameSnake() {
+
+    const board =
+        document.getElementById("gameBoard");
+
+    board.innerHTML = `
+        <canvas id="snakeCanvas"
+                class="snakeCanvas"
+                width="360"
+                height="360"></canvas>
+
+        <p>
+            방향키 / WASD로 이동<br>
+            모바일은 화면 아래 버튼 사용
+        </p>
+
+        <div style="display:grid;grid-template-columns:repeat(3,55px);gap:5px">
+            <span></span>
+            <button onclick="snakeDir(0,-1)">⬆️</button>
+            <span></span>
+            <button onclick="snakeDir(-1,0)">⬅️</button>
+            <button onclick="snakeDir(0,1)">⬇️</button>
+            <button onclick="snakeDir(1,0)">➡️</button>
+        </div>
+    `;
+
+    const canvas =
+        document.getElementById("snakeCanvas");
+
+    const ctx = canvas.getContext("2d");
+
+    const size = 18;
+    const cells = 20;
+
+    let snake = [
+        {x:10,y:10},
+        {x:9,y:10},
+        {x:8,y:10}
+    ];
+
+    let dir = {x:1,y:0};
+    let food = randomFood();
+    let score = 0;
+
+    window.snakeDir = (x,y) => {
+
+        if (x === -dir.x && y === -dir.y)
+            return;
+
+        dir = {x,y};
+    };
+
+    function randomFood() {
+
+        return {
+            x: Math.floor(Math.random()*cells),
+            y: Math.floor(Math.random()*cells)
+        };
+    }
+
+    function draw() {
+
+        ctx.clearRect(
+            0,0,
+            canvas.width,
+            canvas.height
+        );
+
+        ctx.fillStyle = "#56d879";
+
+        snake.forEach(part => {
+
+            ctx.fillRect(
+                part.x * size,
+                part.y * size,
+                size-2,
+                size-2
+            );
+
+        });
+
+        ctx.fillStyle = "#e74c3c";
+
+        ctx.fillRect(
+            food.x * size,
+            food.y * size,
+            size-2,
+            size-2
+        );
+    }
+
+    function tick() {
+
+        const head = {
+            x: snake[0].x + dir.x,
+            y: snake[0].y + dir.y
+        };
+
+        if (
+            head.x < 0 ||
+            head.y < 0 ||
+            head.x >= cells ||
+            head.y >= cells ||
+            snake.some(p =>
+                p.x === head.x &&
+                p.y === head.y
+            )
+        ) {
+
+            clearGameTimers();
+
+            if (score >= 3) {
+
+                winGame(
+                    25 + score * 5,
+                    10 + score * 3,
+                    "스네이크 성공! " +
+                    score + "점"
+                );
+
+            } else {
+
+                document.getElementById("gameResult")
+                    .textContent =
+                    "게임 오버! 사과 3개 이상 먹으면 보상을 받을 수 있습니다.";
+            }
+
+            return;
+        }
+
+        snake.unshift(head);
+
+        if (
+            head.x === food.x &&
+            head.y === food.y
+        ) {
+
+            score++;
+            food = randomFood();
+
+        } else {
+
+            snake.pop();
+        }
+
+        draw();
+    }
+
+    document.addEventListener(
+        "keydown",
+        snakeKeyboard
+    );
+
+    function snakeKeyboard(e) {
+
+        const keys = {
+            ArrowUp:[0,-1],
+            ArrowDown:[0,1],
+            ArrowLeft:[-1,0],
+            ArrowRight:[1,0],
+            w:[0,-1],
+            s:[0,1],
+            a:[-1,0],
+            d:[1,0]
+        };
+
+        if (keys[e.key]) {
+            snakeDir(
+                keys[e.key][0],
+                keys[e.key][1]
+            );
+        }
+    }
+
+    draw();
+
+    gameInterval =
+        setInterval(tick, 150);
+
+    const oldClose = closeGame;
+
+    window._snakeCleanup = () => {
+        document.removeEventListener(
+            "keydown",
+            snakeKeyboard
+        );
+    };
+}
+
+
+/* =========================================================
+   BOMB
+========================================================= */
+
+function gameBomb() {
+
+    const board =
+        document.getElementById("gameBoard");
+
+    board.innerHTML = `
+        <p>💣 폭탄을 움직여 피하세요.</p>
+
+        <div id="bombArea"
+             style="
+             position:relative;
+             width:min(500px,100%);
+             height:280px;
+             background:#181a22;
+             border:2px solid #444;
+             overflow:hidden;
+             border-radius:12px">
+
+            <div id="player"
+                 style="
+                 position:absolute;
+                 left:50%;
+                 top:50%;
+                 width:35px;
+                 height:35px;
+                 background:#55a7ff;
+                 border-radius:50%">
+            </div>
+
+            <div id="bomb"
+                 style="
+                 position:absolute;
+                 width:35px;
+                 height:35px;
+                 background:#e74c3c;
+                 border-radius:50%">
+                 💣
+            </div>
+        </div>
+
+        <p id="bombTime">생존: 0초</p>
+        <p>WASD / 방향키로 이동</p>
+    `;
+
+    const area =
+        document.getElementById("bombArea");
+
+    const player =
+        document.getElementById("player");
+
+    const bomb =
+        document.getElementById("bomb");
+
+    let px = 220;
+    let py = 120;
+
+    let bx = 20;
+    let by = 20;
+
+    let time = 0;
+
+    let keys = {};
+
+    function keydown(e) {
+        keys[e.key] = true;
+    }
+
+    function keyup(e) {
+        keys[e.key] = false;
+    }
+
+    document.addEventListener(
+        "keydown",
+        keydown
+    );
+
+    document.addEventListener(
+        "keyup",
+        keyup
+    );
+
+    gameInterval =
+        setInterval(() => {
+
+            if (
+                keys.ArrowLeft || keys.a
+            ) px -= 5;
+
+            if (
+                keys.ArrowRight || keys.d
+            ) px += 5;
+
+            if (
+                keys.ArrowUp || keys.w
+            ) py -= 5;
+
+            if (
+                keys.ArrowDown || keys.s
+            ) py += 5;
+
+            px = Math.max(
+                0,
+                Math.min(465, px)
+            );
+
+            py = Math.max(
+                0,
+                Math.min(245, py)
+            );
+
+            const dx = px - bx;
+            const dy = py - by;
+
+            const distance =
+                Math.sqrt(dx*dx + dy*dy);
+
+            if (distance > 0) {
+
+                bx += dx / distance * 2;
+                by += dy / distance * 2;
+            }
+
+            player.style.left = px + "px";
+            player.style.top = py + "px";
+
+            bomb.style.left = bx + "px";
+            bomb.style.top = by + "px";
+
+            time += .1;
+
+            document.getElementById("bombTime")
+                .textContent =
+                "생존: " + time.toFixed(1) + "초";
+
+            if (distance < 38) {
+
+                clearGameTimers();
+
+                if (time >= 5) {
+
+                    winGame(
+                        20 + Math.floor(time)*3,
+                        10,
+                        "폭탄을 피했습니다!"
+                    );
+
+                } else {
+
+                    document.getElementById("gameResult")
+                        .textContent =
+                        "폭탄에 맞았습니다!";
+                }
+            }
+
+        }, 100);
+
+    window._bombCleanup = () => {
+        document.removeEventListener(
+            "keydown",
+            keydown
+        );
+
+        document.removeEventListener(
+            "keyup",
+            keyup
+        );
+    };
+}
+
+
+/* =========================================================
+   PUZZLE
+========================================================= */
+
+function gamePuzzle() {
+
+    const board =
+        document.getElementById("gameBoard");
+
+    let numbers =
+        [1,2,3,4,5,6,7,8,9]
+        .sort(() => Math.random()-.5);
+
+    let next = 1;
+    const start = Date.now();
+
+    board.innerHTML = `
+        <p>1부터 9까지 순서대로 클릭!</p>
+        <div class="puzzleGrid"
+             id="puzzleGrid">
+        </div>
+    `;
+
+    const grid =
+        document.getElementById("puzzleGrid");
+
+    numbers.forEach(n => {
+
+        const btn =
+            document.createElement("button");
+
+        btn.textContent = n;
+
+        btn.onclick = () => {
+
+            if (n !== next) {
+
+                document.getElementById("gameResult")
+                    .textContent =
+                    "순서가 틀렸습니다!";
+
+                return;
+            }
+
+            btn.disabled = true;
+            btn.style.opacity = ".4";
+
+            next++;
+
+            if (next === 10) {
+
+                const sec =
+                    (Date.now()-start)/1000;
+
+                const gold =
+                    Math.max(
+                        20,
+                        60-Math.floor(sec*3)
+                    );
+
+                winGame(
+                    gold,
+                    20,
+                    "퍼즐 완료! " +
+                    sec.toFixed(1) + "초"
+                );
+            }
+        };
+
+        grid.appendChild(btn);
+    });
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+function gameCards() {
+
+    const board =
+        document.getElementById("gameBoard");
+
+    const values =
+        ["🍎","🍎","🍋","🍋","🍇","🍇"]
+        .sort(() => Math.random()-.5);
+
+    board.innerHTML = `
+        <p>같은 카드 두 장을 모두 찾아보세요.</p>
+        <div id="cardGrid"
+             style="
+             display:grid;
+             grid-template-columns:repeat(3,80px);
+             gap:8px">
+        </div>
+    `;
+
+    const grid =
+        document.getElementById("cardGrid");
+
+    let opened = [];
+    let matched = 0;
+    let locked = false;
+
+    values.forEach((value,i) => {
+
+        const btn =
+            document.createElement("button");
+
+        btn.style.height = "80px";
+        btn.style.fontSize = "30px";
+        btn.style.background = "#303442";
+        btn.style.color = "white";
+        btn.textContent = "?";
+
+        btn.onclick = () => {
+
+            if (
+                locked ||
+                btn.dataset.open ||
+                opened.length >= 2
+            ) return;
+
+            btn.textContent = value;
+            btn.dataset.open = "1";
+
+            opened.push({
+                btn,
+                value
+            });
+
+            if (opened.length === 2) {
+
+                if (
+                    opened[0].value ===
+                    opened[1].value
+                ) {
+
+                    matched++;
+
+                    opened = [];
+
+                    if (matched === 3) {
+
+                        winGame(
+                            50,
+                            25,
+                            "카드 기억 성공!"
+                        );
+                    }
+
+                } else {
+
+                    locked = true;
+
+                    setTimeout(() => {
+
+                        opened.forEach(x => {
+                            x.btn.textContent = "?";
+                            delete x.btn.dataset.open;
+                        });
+
+                        opened = [];
+                        locked = false;
+
+                    }, 700);
+                }
+            }
+        };
+
+        grid.appendChild(btn);
+    });
+}
+
+
+/* =========================================================
+   COLOR
+========================================================= */
+
+function gameColor() {
+
+    const board =
+        document.getElementById("gameBoard");
+
+    const colors = [
+        ["빨강","#e74c3c"],
+        ["파랑","#3498db"],
+        ["초록","#2ecc71"],
+        ["보라","#9b59b6"],
+        ["주황","#e67e22"]
+    ];
+
+    let round = 0;
+    let target;
+
+    function roundStart() {
+
+        target =
+            colors[Math.floor(
+                Math.random()*colors.length
+            )];
+
+        board.innerHTML = `
+            <div class="colorTarget">
+                목표: <b>${target[0]}</b>
+            </div>
+
+            <div class="colorChoices"
+                 id="colorChoices">
+            </div>
+        `;
+
+        const choices =
+            document.getElementById("colorChoices");
+
+        colors
+            .slice()
+            .sort(() => Math.random()-.5)
+            .forEach(c => {
+
+                const btn =
+                    document.createElement("button");
+
+                btn.textContent = c[0];
+                btn.style.background = c[1];
+
+                btn.onclick = () => {
+
+                    if (c[0] !== target[0]) {
+
+                        document.getElementById("gameResult")
+                            .textContent =
+                            "틀렸습니다!";
+
+                        return;
+                    }
+
+                    round++;
+
+                    if (round >= 5) {
+
+                        winGame(
+                            45,
+                            22,
+                            "5라운드 성공!"
+                        );
+
+                    } else {
+
+                        roundStart();
+                    }
+                };
+
+                choices.appendChild(btn);
+            });
+    }
+
+    roundStart();
+}
+
+
+/* =========================================================
+   MAZE
+========================================================= */
+
+function gameMaze() {
+
+    const board =
+        document.getElementById("gameBoard");
+
+    const map = [
+        "#########",
+        "#S     ##",
+        "### ### #",
+        "#     # #",
+        "# ### # #",
+        "# #     #",
+        "# ##### #",
+        "#      E#",
+        "#########"
+    ];
+
+    let px = 1;
+    let py = 1;
+
+    board.innerHTML = `
+        <div id="mazeBoard"
+             style="
+             display:grid;
+             grid-template-columns:repeat(9,30px);
+             gap:2px">
+        </div>
+
+        <p>방향키 / WASD로 E까지 이동!</p>
+    `;
+
+    const maze =
+        document.getElementById("mazeBoard");
+
+    function draw() {
+
+        maze.innerHTML = "";
+
+        map.forEach((row,y) => {
+
+            [...row].forEach((cell,x) => {
+
+                const d =
+                    document.createElement("div");
+
+                d.style.width = "30px";
+                d.style.height = "30px";
+                d.style.background =
+                    cell === "#"
+                    ? "#555"
+                    : "#20232c";
+
+                if (
+                    x === px &&
+                    y === py
+                ) {
+                    d.textContent = "🟢";
+                } else if (cell === "E") {
+                    d.textContent = "🚪";
+                }
+
+                maze.appendChild(d);
+            });
+        });
+    }
+
+    function move(dx,dy) {
+
+        const nx = px + dx;
+        const ny = py + dy;
+
+        if (
+            map[ny] &&
+            map[ny][nx] !== "#"
+        ) {
+
+            px = nx;
+            py = ny;
+
+            draw();
+
+            if (map[py][px] === "E") {
+
+                clearGameTimers();
+
+                winGame(
+                    50,
+                    25,
+                    "미로 탈출 성공!"
+                );
+            }
+        }
+    }
+
+    function key(e) {
+
+        const k = {
+            ArrowUp:[0,-1],
+            ArrowDown:[0,1],
+            ArrowLeft:[-1,0],
+            ArrowRight:[1,0],
+            w:[0,-1],
+            s:[0,1],
+            a:[-1,0],
+            d:[1,0]
+        };
+
+        if (k[e.key]) {
+            move(
+                k[e.key][0],
+                k[e.key][1]
+            );
+        }
+    }
+
+    document.addEventListener(
+        "keydown",
+        key
+    );
+
+    draw();
+
+    window._mazeCleanup = () => {
+        document.removeEventListener(
+            "keydown",
+            key
+        );
+    };
+}
+
+
+/* =========================================================
+   TIMING
+========================================================= */
+
+function gameTiming() {
+
+    const board =
+        document.getElementById("gameBoard");
+
+    board.innerHTML = `
+        <p>바가 가운데에 있을 때 클릭하세요.</p>
+
+        <div style="
+            position:relative;
+            width:100%;
+            max-width:500px;
+            height:45px;
+            background:#333;
+            border-radius:20px;
+            overflow:hidden">
+
+            <div id="timingZone"
+                 style="
+                 position:absolute;
+                 left:43%;
+                 width:14%;
+                 height:100%;
+                 background:#4cd477">
+            </div>
+
+            <div id="timingBar"
+                 style="
+                 position:absolute;
+                 left:0;
+                 width:7px;
+                 height:100%;
+                 background:white">
+            </div>
+
+        </div>
+
+        <button id="timingButton"
+                class="primary"
+                style="max-width:300px;margin-top:20px">
+            클릭!
+        </button>
+    `;
+
+    const bar =
+        document.getElementById("timingBar");
+
+    let pos = 0;
+    let dir = 1;
+
+    gameInterval =
+        setInterval(() => {
+
+            pos += dir * 2;
+
+            if (pos >= 98) {
+                dir = -1;
+            }
+
+            if (pos <= 0) {
+                dir = 1;
+            }
+
+            bar.style.left = pos + "%";
+
+        }, 20);
+
+    document.getElementById("timingButton")
+        .onclick = () => {
+
+            clearGameTimers();
+
+            if (
+                pos >= 38 &&
+                pos <= 62
+            ) {
+
+                winGame(
+                    50,
+                    25,
+                    "정확한 타이밍!"
+                );
+
+            } else {
+
+                document.getElementById("gameResult")
+                    .textContent =
+                    "아쉽습니다! 초록 구간에서 눌러야 합니다.";
+            }
+        };
+}
+
+
+/* =========================================================
+   SLIME
+========================================================= */
+
+function feedSlime() {
+
+    const d = currentUser.data;
+
+    if (d.food <= 0) {
+        alert("먹이가 없습니다!");
+        return;
+    }
+
+    d.food--;
+    d.slimeActions++;
+
+    addXP(12);
+
+    d.gold += 3;
+
+    document.getElementById("slimeEmotion")
+        .textContent = "😋";
+
+    document.getElementById("homeSlimeMood")
+        .textContent =
+        "맛있는 먹이를 먹었어요!";
+
+    saveCurrentUser();
+    updateUI();
+}
+
+function playSlime() {
+
+    const d = currentUser.data;
+
+    if (d.toys <= 0) {
+        alert("장난감이 없습니다!");
+        return;
+    }
+
+    d.toys--;
+    d.slimeActions++;
+
+    addXP(15);
+    d.gold += 5;
+
+    document.getElementById("slimeEmotion")
+        .textContent = "🤩";
+
+    document.getElementById("homeSlimeMood")
+        .textContent =
+        "슬라임이 신나게 놀고 있어요!";
+
+    saveCurrentUser();
+    updateUI();
+}
+
+function petSlime() {
+
+    const d = currentUser.data;
+
+    d.slimeActions++;
+
+    addXP(5);
+
+    document.getElementById("slimeEmotion")
+        .textContent = "🥰";
+
+    document.getElementById("homeSlimeMood")
+        .textContent =
+        "쓰다듬어줘서 행복해요!";
+
+    saveCurrentUser();
+    updateUI();
+}
+
+function slimeEmotion() {
+
+    const emotions =
+        ["😊","😆","🥰","😎","😴","🤩","😋"];
+
+    const e =
+        emotions[
+            Math.floor(
+                Math.random()*emotions.length
+            )
+        ];
+
+    document.getElementById("slimeEmotion")
+        .textContent = e;
+
+    currentUser.data.slimeActions++;
+
+    saveCurrentUser();
+}
+
+
+/* =========================================================
+   SHOP
+========================================================= */
+
+const shopItems = [
+
+    {
+        id:"food3",
+        name:"🍎 먹이 3개",
+        price:80,
+        action:d => d.food += 3
+    },
+
+    {
+        id:"toy",
+        name:"🧸 장난감 1개",
+        price:150,
+        action:d => d.toys++
+    },
+
+    {
+        id:"ticket",
+        name:"🎟️ 룰렛 티켓",
+        price:300,
+        action:d => d.tickets++
+    },
+
+    {
+        id:"skinBlue",
+        name:"🎨 파란 슬라임 스킨",
+        price:1000,
+        skin:"blue"
+    },
+
+    {
+        id:"skinGold",
+        name:"✨ 황금 슬라임 스킨",
+        price:3000,
+        skin:"gold"
+    }
+];
+
+function renderShop() {
+
+    const grid =
+        document.getElementById("shopGrid");
+
+    if (!grid || !currentUser) return;
+
+    grid.innerHTML = "";
+
+    shopItems.forEach(item => {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "card shopItem";
+
+        card.innerHTML = `
+            <h3>${item.name}</h3>
+            <div class="price">
+                🪙 ${item.price}
+            </div>
+            <button>
+                구매
+            </button>
+        `;
+
+        card.querySelector("button")
+            .onclick = () =>
+                buyItem(item);
+
+        grid.appendChild(card);
+    });
+}
+
+function buyItem(item) {
+
+    const d = currentUser.data;
+
+    if (d.gold < item.price) {
+
+        alert("골드가 부족합니다!");
+        return;
+    }
+
+    if (
+        item.skin &&
+        d.ownedSkins.includes(item.skin)
+    ) {
+
+        alert("이미 보유한 스킨입니다.");
+        return;
+    }
+
+    d.gold -= item.price;
+
+    if (item.skin) {
+
+        d.ownedSkins.push(item.skin);
+
+        alert(
+            item.name +
+            "을(를) 구매했습니다!"
+        );
+
+    } else {
+
+        item.action(d);
+
+        alert(
+            item.name +
+            " 구매 완료!"
+        );
+    }
+
+    saveCurrentUser();
+    updateUI();
+}
+
+
+/* =========================================================
+   ROULETTE
+========================================================= */
+
+function spinRoulette() {
+
+    const d = currentUser.data;
+
+    if (d.tickets <= 0) {
+
+        alert("뽑기권이 없습니다!");
+        return;
+    }
+
+    d.tickets--;
+
+    const r =
+        Math.random() * 100;
+
+    let result;
+
+    if (r < 40) {
+
+        d.gold += 30;
+        result = "🪙 30골드";
+
+    } else if (r < 65) {
+
+        d.food += 3;
+        result = "🍎 먹이 3개";
+
+    } else if (r < 83) {
+
+        d.toys++;
+        result = "🧸 장난감";
+
+    } else if (r < 93) {
+
+        const skins = [
+            "blue",
+            "gold"
+        ];
+
+        const skin =
+            skins[
+                Math.floor(
+                    Math.random()*skins.length
+                )
+            ];
+
+        if (!d.ownedSkins.includes(skin)) {
+            d.ownedSkins.push(skin);
+            result =
+                "🎨 랜덤 스킨 획득!";
+        } else {
+            d.gold += 50;
+            result =
+                "🎨 중복 스킨 대신 50골드!";
+        }
+
+    } else if (r < 98) {
+
+        d.gold += 100;
+        result = "💎 100골드";
+
+    } else {
+
+        d.gold += 500;
+        d.tickets += 2;
+        result =
+            "👑 희귀 보상! 500골드 + 티켓 2개";
+
+    }
+
+    document.getElementById("rouletteResult")
+        .textContent =
+        "🎉 " + result;
+
+    saveCurrentUser();
+    updateUI();
+}
+
+
+/* =========================================================
+   DAILY
+========================================================= */
+
+function todayKey() {
+
+    const d = new Date();
+
+    return d.getFullYear() +
+        "-" +
+        (d.getMonth()+1) +
+        "-" +
+        d.getDate();
+}
+
+function updateDaily() {
+
+    if (!currentUser) return;
+
+    const claimed =
+        currentUser.data.dailyClaimed ===
+        todayKey();
+
+    const info =
+        document.getElementById("dailyInfo");
+
+    const btn =
+        document.getElementById("dailyButton");
+
+    if (claimed) {
+
+        info.textContent =
+            "오늘의 보상을 이미 받았습니다. 내일 다시 오세요!";
+
+        btn.disabled = true;
+        btn.textContent = "✅ 수령 완료";
+
+    } else {
+
+        info.textContent =
+            "오늘은 🪙 100골드 + 🎟️ 티켓 1개!";
+
+        btn.disabled = false;
+        btn.textContent = "🎁 보상 받기";
+    }
+}
+
+function claimDaily() {
+
+    const d = currentUser.data;
+
+    if (d.dailyClaimed === todayKey()) {
+        return;
+    }
+
+    d.dailyClaimed = todayKey();
+
+    d.gold += 100;
+    d.tickets++;
+
+    saveCurrentUser();
+    updateUI();
+
+    alert(
+        "일일 보상 획득!\n100골드 + 룰렛 티켓 1개"
+    );
+}
+
+
+/* =========================================================
+   MISSIONS
+========================================================= */
+
+const missions = [
+
+    {
+        id:"play3",
+        title:"🎮 게임 3회 플레이",
+        condition:d => d.gamesPlayed >= 3,
+        reward:100
+    },
+
+    {
+        id:"win5",
+        title:"🏆 게임 5회 성공",
+        condition:d => d.gamesWon >= 5,
+        reward:150
+    },
+
+    {
+        id:"click50",
+        title:"👆 총 50회 클릭",
+        condition:d => d.clicks >= 50,
+        reward:120
+    },
+
+    {
+        id:"slime10",
+        title:"🟢 슬라임 행동 10회",
+        condition:d => d.slimeActions >= 10,
+        reward:150
+    }
+
+];
+
+function renderMissions() {
+
+    const grid =
+        document.getElementById("missionGrid");
+
+    if (!grid || !currentUser) return;
+
+    const d = currentUser.data;
+
+    grid.innerHTML = "";
+
+    missions.forEach(m => {
+
+        const done =
+            !!d.missions[m.id];
+
+        const complete =
+            m.condition(d);
+
+        const card =
+            document.createElement("div");
+
+        card.className = "card";
+
+        card.innerHTML = `
+            <h3>${m.title}</h3>
+
+            <p>
+                보상: 🪙 ${m.reward}
+            </p>
+
+            <button class="${complete && !done ? "primary" : "secondary"}"
+                    ${!complete || done ? "disabled" : ""}>
+                ${done ? "✅ 완료" : complete ? "🎁 보상 받기" : "진행 중"}
+            </button>
+        `;
+
+        const btn =
+            card.querySelector("button");
+
+        if (complete && !done) {
+
+            btn.onclick = () => {
+
+                d.gold += m.reward;
+                d.missions[m.id] = true;
+
+                saveCurrentUser();
+                updateUI();
+            };
+        }
+
+        grid.appendChild(card);
+    });
+}
+
+
+/* =========================================================
+   ACHIEVEMENTS
+========================================================= */
+
+const achievements = [
+
+    {
+        id:"firstGame",
+        title:"🎮 첫 게임",
+        condition:d => d.gamesPlayed >= 1,
+        reward:50
+    },
+
+    {
+        id:"game10",
+        title:"🔥 게임 10회",
+        condition:d => d.gamesPlayed >= 10,
+        reward:200
+    },
+
+    {
+        id:"win10",
+        title:"🏆 승리 10회",
+        condition:d => d.gamesWon >= 10,
+        reward:250
+    },
+
+    {
+        id:"slime20",
+        title:"🟢 슬라임 친구",
+        condition:d => d.slimeActions >= 20,
+        reward:300
+    }
+
+];
+
+function renderAchievements() {
+
+    const grid =
+        document.getElementById("achievementGrid");
+
+    if (!grid || !currentUser) return;
+
+    const d = currentUser.data;
+
+    grid.innerHTML = "";
+
+    achievements.forEach(a => {
+
+        const complete =
+            a.condition(d);
+
+        const claimed =
+            !!d.achievements[a.id];
+
+        const card =
+            document.createElement("div");
+
+        card.className = "card";
+
+        card.innerHTML = `
+            <h3>${a.title}</h3>
+
+            <p>
+                보상: 🪙 ${a.reward}
+            </p>
+
+            <button class="${complete && !claimed ? "primary" : "secondary"}"
+                    ${!complete || claimed ? "disabled" : ""}>
+                ${
+                    claimed
+                    ? "✅ 달성"
+                    : complete
+                    ? "🎁 보상 받기"
+                    : "🔒 미달성"
+                }
+            </button>
+        `;
+
+        const btn =
+            card.querySelector("button");
+
+        if (complete && !claimed) {
+
+            btn.onclick = () => {
+
+                d.gold += a.reward;
+                d.achievements[a.id] = true;
+
+                saveCurrentUser();
+                updateUI();
+            };
+        }
+
+        grid.appendChild(card);
+    });
+}
+
+
+/* =========================================================
+   CHAT
+========================================================= */
+
+function getChat() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem(
+                "gameHubChat"
+            )
+        ) || [];
+
+    } catch {
+
+        return [];
+    }
+}
+
+function saveChat(data) {
+
+    localStorage.setItem(
+        "gameHubChat",
+        JSON.stringify(data.slice(-100))
+    );
+}
+
+function sendChat() {
+
+    const input =
+        document.getElementById("chatText");
+
+    const text =
+        input.value.trim();
+
+    if (!text) return;
+
+    const messages = getChat();
+
+    messages.push({
+        id: currentUser.id,
+        text: text,
+        time: Date.now()
+    });
+
+    saveChat(messages);
+
+    input.value = "";
+
+    renderChat();
+}
+
+function renderChat() {
+
+    const box =
+        document.getElementById("chatMessages");
+
+    if (!box) return;
+
+    const messages = getChat();
+
+    box.innerHTML = "";
+
+    messages.forEach(m => {
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "chatMessage";
+
+        div.innerHTML =
+            "<b>" +
+            escapeHTML(m.id) +
+            "</b>: " +
+            escapeHTML(m.text);
+
+        box.appendChild(div);
+    });
+
+    box.scrollTop =
+        box.scrollHeight;
+}
+
+function escapeHTML(str) {
+
+    return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+}
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+function toggleMobileMode() {
+
+    document.body.classList.toggle(
+        "mobile-mode"
+    );
+
+    const on =
+        document.body.classList.contains(
+            "mobile-mode"
+        );
+
+    localStorage.setItem(
+        "gameHubMobileMode",
+        on ? "on" : "off"
+    );
+
+    document.getElementById(
+        "mobileSwitch"
+    ).classList.toggle("on", on);
+}
+
+function loadMobileMode() {
+
+    const on =
+        localStorage.getItem(
+            "gameHubMobileMode"
+        ) === "on";
+
+    document.body.classList.toggle(
+        "mobile-mode",
+        on
+    );
+
+    const btn =
+        document.getElementById(
+            "mobileSwitch"
+        );
+
+    if (btn) {
+        btn.classList.toggle("on", on);
+    }
+}
+
+function toggleSound() {
+
+    const btn =
+        document.getElementById(
+            "soundSwitch"
+        );
+
+    const on =
+        btn.classList.toggle("on");
+
+    localStorage.setItem(
+        "gameHubSound",
+        on ? "on" : "off"
+    );
+}
+
+
+/* =========================================================
+   ADMIN
+========================================================= */
+
+function isAdmin() {
+
+    return currentUser &&
+        currentUser.admin === true;
+}
+
+function adminAnnouncement() {
+
+    if (!isAdmin()) {
+        alert("관리자만 사용할 수 있습니다.");
+        return;
+    }
+
+    const input =
+        document.getElementById(
+            "announcement"
+        );
+
+    const text =
+        input.value.trim();
+
+    if (!text) return;
+
+    const messages = getChat();
+
+    messages.push({
+        id:"👑 관리자 공지",
+        text:text,
+        time:Date.now()
+    });
+
+    saveChat(messages);
+
+    input.value = "";
+
+    alert("공지 전송 완료!");
+}
+
+function banPlayer() {
+
+    if (!isAdmin()) return;
+
+    const name =
+        document.getElementById(
+            "banName"
+        ).value.trim();
+
+    if (!name) return;
+
+    const accounts = getAccounts();
+
+    if (!accounts[name]) {
+        alert("존재하지 않는 계정입니다.");
+        return;
+    }
+
+    accounts[name].banned = true;
+
+    saveAccounts(accounts);
+
+    alert(
+        name +
+        " 계정을 이용 제한했습니다."
+    );
+}
+
+function unbanPlayer() {
+
+    if (!isAdmin()) return;
+
+    const name =
+        document.getElementById(
+            "banName"
+        ).value.trim();
+
+    const accounts = getAccounts();
+
+    if (!accounts[name]) {
+        alert("존재하지 않는 계정입니다.");
+        return;
+    }
+
+    accounts[name].banned = false;
+
+    saveAccounts(accounts);
+
+    alert(
+        name +
+        " 계정의 이용 제한을 해제했습니다."
+    );
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        loadMobileMode();
+
+        const sound =
+            localStorage.getItem(
+                "gameHubSound"
+            );
+
+        if (sound === "off") {
+
+            document.getElementById(
+                "soundSwitch"
+            ).classList.remove("on");
+        }
+
+        const pw =
+            document.getElementById(
+                "loginPw"
+            );
+
+        pw.addEventListener(
+            "keydown",
+            e => {
+
+                if (e.key === "Enter") {
+                    login();
+                }
+
+            }
+        );
+
+        const chat =
+            document.getElementById(
+                "chatText"
+            );
+
+        chat.addEventListener(
+            "keydown",
+            e => {
+
+                if (e.key === "Enter") {
+                    sendChat();
+                }
+
+            }
+        );
+
+        checkLogin();
+    }
+);
+
+
+/* =========================================================
+   EXTRA CLEANUP
+========================================================= */
+
+const originalCloseGame = closeGame;
+
+closeGame = function() {
+
+    clearGameTimers();
+
+    if (window._snakeCleanup) {
+        window._snakeCleanup();
+        window._snakeCleanup = null;
+    }
+
+    if (window._bombCleanup) {
+        window._bombCleanup();
+        window._bombCleanup = null;
+    }
+
+    if (window._mazeCleanup) {
+        window._mazeCleanup();
+        window._mazeCleanup = null;
+    }
+
+    document.getElementById("gameModal")
+        .classList.add("hidden");
+
+    currentGame = null;
+};
+
+</script>
+
+</body>
+</html>
